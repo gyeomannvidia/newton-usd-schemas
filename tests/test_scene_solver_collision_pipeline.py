@@ -159,6 +159,136 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
         self.assertTrue(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), True)
 
+    def test_include_static_kinematic_pairs(self):
+        self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
+        attr = self.scene.GetAttribute("newton:collisionPipeline:includeStaticKinematicPairs")
+        self.assertIsNotNone(attr)
+        self.assertFalse(attr.HasAuthoredValue())
+        self.assertEqual(attr.Get(), True)
+
+        self.assertTrue(attr.Set(False))
+        self.assertTrue(attr.HasAuthoredValue())
+        self.assertEqual(attr.Get(), False)
+
+    def test_shape_pairs_max(self):
+        self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
+        attr = self.scene.GetAttribute("newton:collisionPipeline:shapePairsMax")
+        self.assertIsNotNone(attr)
+        self.assertFalse(attr.HasAuthoredValue())
+        self.assertEqual(attr.Get(), -1)
+
+        self.assertTrue(attr.Set(4096))
+        self.assertTrue(attr.HasAuthoredValue())
+        self.assertEqual(attr.Get(), 4096)
+
+        if USD_HAS_LIMITS:
+            hard = attr.GetHardLimits()
+            self.assertTrue(hard.IsValid())
+            self.assertEqual(hard.GetMinimum(), -1)
+            self.assertIsNone(hard.GetMaximum())
+
+    def test_contact_matching(self):
+        self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
+        attr = self.scene.GetAttribute("newton:collisionPipeline:contactMatching")
+        self.assertIsNotNone(attr)
+        self.assertFalse(attr.HasAuthoredValue())
+        self.assertEqual(attr.Get(), "disabled")
+
+        self.assertTrue(attr.Set("sticky"))
+        self.assertTrue(attr.HasAuthoredValue())
+        self.assertEqual(attr.Get(), "sticky")
+        self.assertEqual(set(attr.GetMetadata("allowedTokens")), {"disabled", "latest", "sticky"})
+
+    def test_contact_matching_pos_threshold(self):
+        self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
+        attr = self.scene.GetAttribute("newton:collisionPipeline:contactMatchingPosThreshold")
+        self.assertIsNotNone(attr)
+        self.assertFalse(attr.HasAuthoredValue())
+        self.assertAlmostEqual(attr.Get(), 0.0005)
+
+        self.assertTrue(attr.Set(0.01))
+        self.assertTrue(attr.HasAuthoredValue())
+        self.assertAlmostEqual(attr.Get(), 0.01)
+
+        if USD_HAS_LIMITS:
+            hard = attr.GetHardLimits()
+            self.assertTrue(hard.IsValid())
+            self.assertAlmostEqual(hard.GetMinimum(), 0.0)
+            self.assertIsNone(hard.GetMaximum())
+
+    def test_contact_matching_normal_dot_threshold(self):
+        self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
+        attr = self.scene.GetAttribute("newton:collisionPipeline:contactMatchingNormalDotThreshold")
+        self.assertIsNotNone(attr)
+        self.assertFalse(attr.HasAuthoredValue())
+        self.assertAlmostEqual(attr.Get(), 0.995)
+
+        self.assertTrue(attr.Set(0.9))
+        self.assertTrue(attr.HasAuthoredValue())
+        self.assertAlmostEqual(attr.Get(), 0.9)
+
+        if USD_HAS_LIMITS:
+            hard = attr.GetHardLimits()
+            self.assertTrue(hard.IsValid())
+            self.assertAlmostEqual(hard.GetMinimum(), -1.0)
+            self.assertAlmostEqual(hard.GetMaximum(), 1.0)
+
+    def test_contact_report(self):
+        self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
+        attr = self.scene.GetAttribute("newton:collisionPipeline:contactReport")
+        self.assertIsNotNone(attr)
+        self.assertFalse(attr.HasAuthoredValue())
+        self.assertEqual(attr.Get(), False)
+
+        self.assertTrue(attr.Set(True))
+        self.assertTrue(attr.HasAuthoredValue())
+        self.assertEqual(attr.Get(), True)
+
+    def test_verify_buffers(self):
+        self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
+        attr = self.scene.GetAttribute("newton:collisionPipeline:verifyBuffers")
+        self.assertIsNotNone(attr)
+        self.assertFalse(attr.HasAuthoredValue())
+        self.assertEqual(attr.Get(), True)
+
+        self.assertTrue(attr.Set(False))
+        self.assertTrue(attr.HasAuthoredValue())
+        self.assertEqual(attr.Get(), False)
+
+    def test_contact_reduction_hashtable_size_factor(self):
+        self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
+        attr = self.scene.GetAttribute("newton:collisionPipeline:contactReductionHashtableSizeFactor")
+        self.assertIsNotNone(attr)
+        self.assertFalse(attr.HasAuthoredValue())
+        self.assertAlmostEqual(attr.Get(), 0.25)
+
+        self.assertTrue(attr.Set(0.5))
+        self.assertTrue(attr.HasAuthoredValue())
+        self.assertAlmostEqual(attr.Get(), 0.5)
+
+        if USD_HAS_LIMITS:
+            hard = attr.GetHardLimits()
+            self.assertTrue(hard.IsValid())
+            self.assertAlmostEqual(hard.GetMinimum(), 0.0)
+            self.assertIsNone(hard.GetMaximum())
+
+    def test_speculative_max_extension(self):
+        self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
+        attr = self.scene.GetAttribute("newton:collisionPipeline:speculativeMaxExtension")
+        self.assertIsNotNone(attr)
+        self.assertFalse(attr.HasAuthoredValue())
+        self.assertEqual(attr.Get(), -math.inf)
+
+        self.assertTrue(attr.Set(0.1))
+        self.assertTrue(attr.HasAuthoredValue())
+        self.assertAlmostEqual(attr.Get(), 0.1)
+
+        if USD_HAS_LIMITS:
+            hard = attr.GetHardLimits()
+            self.assertTrue(hard.IsValid())
+            self.assertAlmostEqual(hard.GetMinimum(), 0.0)
+            self.assertIsNone(hard.GetMaximum())
+
 
 if __name__ == "__main__":
     unittest.main()
