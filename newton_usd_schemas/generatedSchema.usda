@@ -544,6 +544,122 @@ class "NewtonMPMSceneAPI" (
     )
 }
 
+class "NewtonCollisionPipelineAPI" (
+    apiSchemas = ["NewtonSceneAPI"]
+    doc = """Configures Newton's collision pipeline (broad phase, narrow phase
+    buffer sizing, and contact generation policy) for a `PhysicsScene` prim.
+
+    Applying this schema also applies `NewtonSceneAPI`."""
+)
+{
+    uniform token newton:collisionPipeline:broadPhase = "explicit" (
+        allowedTokens = ["nxn", "sap", "explicit"]
+        doc = """Broad phase candidate-pair generation strategy.
+
+        "nxn": all-pairs broad phase with AABB overlap, group, and excluded-pair
+        filtering. "sap": sweep-and-prune broad phase. "explicit": use a
+        precomputed shape-pair list (e.g. `PhysicsFilteredPairsAPI`-derived
+        pairs) instead of dynamic broad-phase search."""
+    )
+
+    uniform int newton:collisionPipeline:maxTrianglePairs = 1000000 (
+        doc = """Maximum number of triangle pairs allocated by the narrow phase
+        for mesh and heightfield collisions.
+
+        Increase this when scenes with large/complex meshes or heightfields
+        report triangle-pair overflow warnings.
+
+        Range: [1, inf)
+        Units: dimensionless"""
+        limits = {
+            dictionary hard = {
+                int minimum = 1
+            }
+        }
+    )
+
+    uniform int newton:collisionPipeline:rigidContactMax = -1 (
+        doc = """Maximum rigid contact buffer capacity.
+
+        If `newton:collisionPipeline:rigidContactMax` is set to `-1`, the
+        engine estimates a conservative capacity from the model's shape and
+        pair metadata.
+
+        Range: [-1, inf)
+        Units: dimensionless"""
+        limits = {
+            dictionary hard = {
+                int minimum = -1
+            }
+        }
+    )
+
+    uniform bool newton:collisionPipeline:reduceContacts = true (
+        doc = "Whether to reduce contacts for mesh-mesh collisions."
+    )
+
+    uniform int newton:collisionPipeline:softContactMax = -1 (
+        doc = """Maximum soft contact buffer capacity.
+
+        If `newton:collisionPipeline:softContactMax` is set to `-1`, the
+        engine derives a capacity from the model's soft-rigid contact pair
+        count (plus full-surface headroom when
+        `newton:collisionPipeline:enableRigidSoftFullSurfaceContact` is set).
+
+        Range: [-1, inf)
+        Units: dimensionless"""
+        limits = {
+            dictionary hard = {
+                int minimum = -1
+            }
+        }
+    )
+
+    uniform float newton:collisionPipeline:softContactGap = -inf (
+        doc = """Detection-only distance added to the per-particle radius for
+        particle-shape (soft) contact queries.
+
+        If `newton:collisionPipeline:softContactGap` is set to `-inf`, the
+        engine's default should be used instead.
+
+        Range: [0, inf)
+        Units: distance"""
+        limits = {
+            dictionary hard = {
+                float minimum = 0
+            }
+        }
+    )
+
+    uniform bool newton:collisionPipeline:enableRigidSoftFullSurfaceContact = false (
+        doc = """Generate soft contacts over the full soft-mesh surface (edges
+        and triangle interiors) against rigid SDFs, in addition to the
+        per-vertex (particle) contacts.
+
+        Requires an SDF on every participating rigid mesh/convex shape (see
+        `NewtonSDFCollisionAPI`), and is only consumed by solvers that support
+        full-surface soft contact; other solvers should raise on such
+        contacts."""
+    )
+
+    uniform token newton:collisionPipeline:requiresGrad = "inherit" (
+        allowedTokens = ["inherit", "true", "false"]
+        doc = """Whether pipeline-generated soft contacts (and the deprecated
+        automatic rigid-contact outputs) require gradients.
+
+        If `newton:collisionPipeline:requiresGrad` is set to "inherit", the
+        engine uses the owning model's `requires_grad` setting."""
+    )
+
+    uniform bool newton:collisionPipeline:deterministic = false (
+        doc = """Sort contacts after the narrow phase so that results are
+        independent of GPU thread scheduling.
+
+        Also enables deterministic hydroelastic accumulation and contact
+        allocation. Adds a radix sort + gather pass."""
+    )
+}
+
 class NewtonArticulationRootAPI "NewtonArticulationRootAPI" (
     apiSchemas = ["PhysicsArticulationRootAPI"]
     doc = """NewtonArticulationRootAPI extends the `PhysicsArticulationRootAPI` with additional attributes for Newton.
