@@ -680,7 +680,9 @@ class "NewtonCollisionPipelineAPI" (
         If `newton:collisionPipeline:shapePairsMax` is set to `-1`, the engine
         uses the worst-case per-world bound. Ignored for the "explicit" mode.
 
-        Range: [-1, inf)
+        A value of `0` is invalid.
+
+        Range: {-1} ∪ (0, inf)
         Units: dimensionless"""
         limits = {
             dictionary hard = {
