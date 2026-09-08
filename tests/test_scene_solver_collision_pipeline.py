@@ -120,10 +120,10 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
         self.assertAlmostEqual(attr.Get(), 0.02)
 
         if USD_HAS_LIMITS:
-            hard = attr.GetHardLimits()
-            self.assertTrue(hard.IsValid())
-            self.assertAlmostEqual(hard.GetMinimum(), 0.0)
-            self.assertIsNone(hard.GetMaximum())
+            soft = attr.GetSoftLimits()
+            self.assertTrue(soft.IsValid())
+            self.assertAlmostEqual(soft.GetMinimum(), 0.0)
+            self.assertIsNone(soft.GetMaximum())
 
     def test_enable_rigid_soft_full_surface_contact(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
@@ -284,10 +284,10 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
         self.assertAlmostEqual(attr.Get(), 0.1)
 
         if USD_HAS_LIMITS:
-            hard = attr.GetHardLimits()
-            self.assertTrue(hard.IsValid())
-            self.assertAlmostEqual(hard.GetMinimum(), 0.0)
-            self.assertIsNone(hard.GetMaximum())
+            soft = attr.GetSoftLimits()
+            self.assertTrue(soft.IsValid())
+            self.assertAlmostEqual(soft.GetMinimum(), 0.0)
+            self.assertIsNone(soft.GetMaximum())
 
 
 if __name__ == "__main__":

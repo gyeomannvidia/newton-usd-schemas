@@ -630,7 +630,7 @@ class "NewtonCollisionPipelineAPI" (
         Range: [0, inf)
         Units: distance"""
         limits = {
-            dictionary hard = {
+            dictionary soft = {
                 float minimum = 0
             }
         }
@@ -771,7 +771,7 @@ class "NewtonCollisionPipelineAPI" (
         Range: [0, inf)
         Units: distance"""
         limits = {
-            dictionary hard = {
+            dictionary soft = {
                 float minimum = 0
             }
         }
