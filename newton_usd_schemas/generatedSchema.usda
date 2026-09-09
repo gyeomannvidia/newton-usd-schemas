@@ -549,12 +549,7 @@ class "NewtonCollisionPipelineAPI" (
     doc = """Configures Newton's collision pipeline (broad phase, narrow phase
     buffer sizing, and contact generation policy) for a `PhysicsScene` prim.
 
-    Applying this schema also applies `NewtonSceneAPI`.
-
-    Not covered: the pipeline's expert-construction inputs -- a precomputed
-    shape-pair array, a prebuilt narrow phase instance, and the hydroelastic
-    SDF contact configuration -- are live objects/arrays rather than
-    authorable configuration values."""
+    Applying this schema also applies `NewtonSceneAPI`."""
 )
 {
     uniform token newton:collisionPipeline:broadPhase = "explicit" (
