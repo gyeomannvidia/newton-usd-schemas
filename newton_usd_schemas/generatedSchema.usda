@@ -549,6 +549,9 @@ class "NewtonCollisionPipelineAPI" (
     doc = """Configures Newton's collision pipeline (broad phase, narrow phase
     buffer sizing, and contact generation policy) for a `PhysicsScene` prim.
 
+    EXPERIMENTAL: The Newton collision pipeline schema is provisional. Attribute names,
+    defaults, and composition rules may change without notice in subsequent releases.
+
     Applying this schema also applies `NewtonSceneAPI`."""
 )
 {
