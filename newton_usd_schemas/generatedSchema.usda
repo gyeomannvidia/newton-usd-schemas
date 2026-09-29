@@ -584,9 +584,14 @@ class "NewtonCollisionPipelineAPI" (
     uniform int newton:collisionPipeline:rigidContactMax = -1 (
         doc = """Maximum rigid contact buffer capacity.
 
-        If `newton:collisionPipeline:rigidContactMax` is set to `-1`, the
-        engine estimates a conservative capacity from the model's shape and
-        pair metadata.
+        If set to `-1`, `newton.Model.rigid_contact_max` is used if it is
+        positive. If `newton.Model.rigid_contact_max` is not positive, a
+        conservative capacity is instead estimated from the model's shape
+        and pair metadata.
+
+        If set to a value greater than or equal to `0`, that value is used
+        directly as the buffer capacity. A value of `0` means no rigid
+        contacts are allocated.
 
         Range: [-1, inf)
         Units: dimensionless"""
