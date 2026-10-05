@@ -619,26 +619,6 @@ class "NewtonMuJoCoSceneAPI" (
         non-RK4 integrator."""
     )
 
-    uniform float newton:mujoco:sleep_tolerance = 0.001 (
-        doc = """Velocity tolerance below which a body is allowed to fall asleep (MuJoCo `sleep_tolerance`).
-
-        Only used when `newton:mujoco:enableSleeping` is true. The solver default is 0.001.
-
-        The threshold is a single speed in distance units for every DOF. MuJoCo multiplies each angular
-        velocity (radians / seconds) by that DOF's characteristic length (`dof_length`), which depends on the
-        geometry of the body, before comparing it with the tolerance. The same tolerance therefore corresponds to
-        a different angular velocity for bodies of different size, and it should not be interpreted or converted
-        as a radians / seconds value.
-
-        Range: [0, inf)
-        Units: distance / seconds"""
-        limits = {
-            dictionary hard = {
-                float minimum = 0
-            }
-        }
-    )
-
     uniform int newton:mujoco:nvmax = -1 (
         doc = """Maximum number of active degrees of freedom per world when sleeping is enabled (MuJoCo `nvmax`).
 
