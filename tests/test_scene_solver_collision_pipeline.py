@@ -63,9 +63,9 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
             self.assertEqual(hard.GetMinimum(), 1)
             self.assertIsNone(hard.GetMaximum())
 
-    def test_rigid_contact_max(self):
+    def test_max_rigid_contacts(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:rigidContactMax")
+        attr = self.scene.GetAttribute("newton:collisionPipeline:maxRigidContacts")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), -1)
@@ -91,9 +91,9 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
         self.assertTrue(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), False)
 
-    def test_soft_contact_max(self):
+    def test_max_soft_contacts(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:softContactMax")
+        attr = self.scene.GetAttribute("newton:collisionPipeline:maxSoftContacts")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), -1)
@@ -170,9 +170,9 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
         self.assertTrue(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), False)
 
-    def test_shape_pairs_max(self):
+    def test_max_shape_pairs(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:shapePairsMax")
+        attr = self.scene.GetAttribute("newton:collisionPipeline:maxShapePairs")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), -1)
@@ -274,7 +274,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_speculative_max_extension(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:speculativeMaxExtension")
+        attr = self.scene.GetAttribute("newton:collisionPipeline:maxSpeculativeExtension")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), -math.inf)

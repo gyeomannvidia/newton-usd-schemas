@@ -581,7 +581,7 @@ class "NewtonCollisionPipelineAPI" (
         }
     )
 
-    uniform int newton:collisionPipeline:rigidContactMax = -1 (
+    uniform int newton:collisionPipeline:maxRigidContacts = -1 (
         doc = """Maximum rigid contact buffer capacity.
 
         If set to `-1`, `newton.Model.rigid_contact_max` is used if it is
@@ -606,10 +606,10 @@ class "NewtonCollisionPipelineAPI" (
         doc = "Whether to reduce contacts for mesh-mesh collisions."
     )
 
-    uniform int newton:collisionPipeline:softContactMax = -1 (
+    uniform int newton:collisionPipeline:maxSoftContacts = -1 (
         doc = """Maximum soft contact buffer capacity.
 
-        If `newton:collisionPipeline:softContactMax` is set to `-1`, the
+        If `newton:collisionPipeline:maxSoftContacts` is set to `-1`, the
         engine derives a capacity from the model's soft-rigid contact pair
         count (plus full-surface headroom when
         `newton:collisionPipeline:enableRigidSoftFullSurfaceContact` is set).
@@ -675,12 +675,12 @@ class "NewtonCollisionPipelineAPI" (
         kinematic-kinematic pairs."""
     )
 
-    uniform int newton:collisionPipeline:shapePairsMax = -1 (
+    uniform int newton:collisionPipeline:maxShapePairs = -1 (
         doc = """Override for the broad-phase candidate-pair buffer capacity
         used by the "nxn" and "sap" `newton:collisionPipeline:broadPhase`
         modes.
 
-        If `newton:collisionPipeline:shapePairsMax` is set to `-1`, the engine
+        If `newton:collisionPipeline:maxShapePairs` is set to `-1`, the engine
         uses the worst-case per-world bound. Ignored for the "explicit" mode.
 
         A value of `0` is invalid.
@@ -759,7 +759,7 @@ class "NewtonCollisionPipelineAPI" (
         }
     )
 
-    uniform float newton:collisionPipeline:speculativeMaxExtension = -inf (
+    uniform float newton:collisionPipeline:maxSpeculativeExtension = -inf (
         doc = """Upper bound on the velocity-based contact gap for speculative
         rigid contacts.
 
@@ -768,7 +768,7 @@ class "NewtonCollisionPipelineAPI" (
         value of `0` enables speculative contacts without velocity
         adaptation.
 
-        If `newton:collisionPipeline:speculativeMaxExtension` is set to
+        If `newton:collisionPipeline:maxSpeculativeExtension` is set to
         `-inf`, speculative contacts are disabled.
 
         Range: [0, inf)
