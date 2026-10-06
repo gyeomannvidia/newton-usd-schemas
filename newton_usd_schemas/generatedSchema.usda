@@ -668,11 +668,11 @@ class "NewtonCollisionPipelineAPI" (
     )
 
     uniform bool newton:collisionPipeline:includeStaticKinematicPairs = true (
-        doc = """Whether to generate contacts for shape pairs where both shapes
-        are immovable.
+        doc = """Whether to generate contacts for static-kinematic and
+        kinematic-kinematic shape pairs.
 
-        Set to false to filter static-static, static-kinematic, and
-        kinematic-kinematic pairs."""
+        Set to false to filter those pairs. Static-static pairs are always
+        filtered, regardless of this setting."""
     )
 
     uniform int newton:collisionPipeline:maxShapePairs = -1 (
