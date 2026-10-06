@@ -759,7 +759,7 @@ class "NewtonCollisionPipelineAPI" (
         }
     )
 
-    uniform float newton:collisionPipeline:maxSpeculativeExtension = -inf (
+    uniform float newton:collisionPipeline:maxSpeculativeContactGap = -inf (
         doc = """Upper bound on the velocity-based contact gap for speculative
         rigid contacts.
 
@@ -768,7 +768,7 @@ class "NewtonCollisionPipelineAPI" (
         value of `0` enables speculative contacts without velocity
         adaptation.
 
-        If `newton:collisionPipeline:maxSpeculativeExtension` is set to
+        If `newton:collisionPipeline:maxSpeculativeContactGap` is set to
         `-inf`, speculative contacts are disabled.
 
         Range: [0, inf)

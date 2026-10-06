@@ -272,9 +272,9 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
             self.assertAlmostEqual(hard.GetMinimum(), 0.0)
             self.assertIsNone(hard.GetMaximum())
 
-    def test_speculative_max_extension(self):
+    def test_speculative_max_contact_gap(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:maxSpeculativeExtension")
+        attr = self.scene.GetAttribute("newton:collisionPipeline:maxSpeculativeContactGap")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), -math.inf)
