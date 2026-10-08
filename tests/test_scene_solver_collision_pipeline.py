@@ -51,7 +51,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
         attr = self.scene.GetAttribute("newton:collisionPipeline:maxTrianglePairs")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
-        self.assertEqual(attr.Get(), 1000000)
+        self.assertEqual(attr.Get(), -1)
 
         self.assertTrue(attr.Set(500000))
         self.assertTrue(attr.HasAuthoredValue())
@@ -60,7 +60,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
         if USD_HAS_LIMITS:
             hard = attr.GetHardLimits()
             self.assertTrue(hard.IsValid())
-            self.assertEqual(hard.GetMinimum(), 1)
+            self.assertEqual(hard.GetMinimum(), -1)
             self.assertIsNone(hard.GetMaximum())
 
     def test_max_rigid_contacts(self):

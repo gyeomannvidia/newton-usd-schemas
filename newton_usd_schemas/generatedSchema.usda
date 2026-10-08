@@ -565,18 +565,22 @@ class "NewtonCollisionPipelineAPI" (
         pairs) instead of dynamic broad-phase search."""
     )
 
-    uniform int newton:collisionPipeline:maxTrianglePairs = 1000000 (
+    uniform int newton:collisionPipeline:maxTrianglePairs = -1 (
         doc = """Maximum number of triangle pairs allocated by the narrow phase
         for mesh and heightfield collisions.
+
+        If set to `-1`, the simulator chooses its own default capacity.
 
         Increase this when scenes with large/complex meshes or heightfields
         report triangle-pair overflow warnings.
 
-        Range: [1, inf)
+        A value of `0` is invalid.
+
+        Range: {-1} ∪ (0, inf)
         Units: dimensionless"""
         limits = {
             dictionary hard = {
-                int minimum = 1
+                int minimum = -1
             }
         }
     )
