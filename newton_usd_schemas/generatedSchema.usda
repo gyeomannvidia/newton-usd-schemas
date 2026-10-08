@@ -666,7 +666,10 @@ class "NewtonCollisionPipelineAPI" (
         independent of GPU thread scheduling.
 
         Also enables deterministic hydroelastic accumulation and contact
-        allocation. Adds a radix sort + gather pass."""
+        allocation. Adds a radix sort + gather pass.
+
+        If `newton:collisionPipeline:contactMatching` is set to any mode other
+        than "disabled", this flag behaves as true."""
     )
 
     uniform bool newton:collisionPipeline:includeStaticKinematicPairs = true (
