@@ -17,7 +17,6 @@ ATTRIBUTES = [
     ("newton:mujoco:nconmax", -1, -1),
     ("newton:mujoco:useMujocoCpu", False, None),
     ("newton:mujoco:useMujocoContacts", True, None),
-    ("newton:mujoco:enableSleeping", False, None),
     ("newton:mujoco:nvmax", -1, -1),
     ("newton:mujoco:updateDataInterval", 1, 0),
     ("newton:mujoco:includeSites", True, None),

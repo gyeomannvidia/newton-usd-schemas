@@ -624,18 +624,11 @@ class "NewtonMuJoCoSceneAPI" (
         When false, contacts must be provided by Newton's collision pipeline."""
     )
 
-    uniform bool newton:mujoco:enableSleeping = false (
-        doc = """Whether to enable MuJoCo Warp's sleeping optimization.
-
-        Requires the MuJoCo Warp backend, MuJoCo contact handling, the Newton solver, and a
-        non-RK4 integrator."""
-    )
-
     uniform int newton:mujoco:nvmax = -1 (
         doc = """Maximum number of active degrees of freedom per world when sleeping is enabled (MuJoCo `nvmax`).
 
-        If set to -1, space is allocated for every degree of freedom. Only valid when
-        `newton:mujoco:enableSleeping` is true.
+        If set to -1, space is allocated for every degree of freedom. Only valid when sleeping is
+        enabled in the solver.
 
         Range: [-1, inf)
         Units: dimensionless"""
