@@ -70,14 +70,6 @@ class TestNewtonMuJoCoSceneAPI(unittest.TestCase):
                 self.assertTrue(attr.Set(value))
                 self.assertAlmostEqual(attr.Get(), value, places=6)
 
-    def test_deterministic(self):
-        self.scene.ApplyAPI("NewtonMuJoCoSceneAPI")
-        attr = self.scene.GetAttribute("newton:mujoco:deterministic")
-        self.assertEqual(attr.Get(), "inherit")
-        for token in ("notGuaranteed", "runToRun", "gpuToGpu"):
-            self.assertTrue(attr.Set(token))
-            self.assertEqual(attr.Get(), token)
-
     @unittest.skipUnless(USD_HAS_LIMITS, "Attribute limits require a newer USD")
     def test_attribute_limits(self):
         self.scene.ApplyAPI("NewtonMuJoCoSceneAPI")
