@@ -42,11 +42,12 @@ class TestNewtonMuJoCoSceneAPI(unittest.TestCase):
         self.assertTrue(self.scene.HasAPI("NewtonMuJoCoSceneAPI"))
         self.assertTrue(self.scene.HasAttribute("newton:maxSolverIterations"))
 
-    def test_includes_mjc_scene_api(self):
-        # The MjcSceneAPI plugin is not a dependency, so check the declared inclusion rather than the applied schemas.
+    def test_does_not_include_mjc_scene_api(self):
         layer = Sdf.Layer.FindOrOpen((pathlib.Path(newton_usd_schemas.__file__).parent / "generatedSchema.usda").as_posix())
         api_schemas = layer.GetPrimAtPath("/NewtonMuJoCoSceneAPI").GetInfo("apiSchemas")
-        self.assertEqual(list(api_schemas.GetAddedOrExplicitItems()), ["NewtonSceneAPI", "MjcSceneAPI"])
+        self.assertEqual(list(api_schemas.GetAddedOrExplicitItems()), ["NewtonSceneAPI"])
+        self.scene.ApplyAPI("NewtonMuJoCoSceneAPI")
+        self.assertFalse(self.scene.HasAPI("MjcSceneAPI"))
 
     def test_api_limitations(self):
         prim: Usd.Prim = self.stage.DefinePrim("/NotScene", "Xform")

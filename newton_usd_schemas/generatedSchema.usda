@@ -557,14 +557,14 @@ class "NewtonMPMSceneAPI" (
 }
 
 class "NewtonMuJoCoSceneAPI" (
-    apiSchemas = ["NewtonSceneAPI", "MjcSceneAPI"]
+    apiSchemas = ["NewtonSceneAPI"]
     doc = """Provides Newton's MuJoCo solver configuration.
 
-    Applying this schema also applies `NewtonSceneAPI` and the MuJoCo `MjcSceneAPI`. Options that
-    `MjcSceneAPI` already describes (for example `mjc:option:iterations`, `mjc:option:solver`,
-    `mjc:option:cone`, or `mjc:option:impratio`) are authored through that schema. The attributes
-    below only cover `SolverMuJoCo` settings that have no MuJoCo USD equivalent. Contact, sensor and
-    multi-CCD toggles are authored through `mjc:flag:contact`, `mjc:flag:sensor` and `mjc:flag:multiccd`.
+    Applying this schema also applies `NewtonSceneAPI`. Options such as `mjc:option:iterations`,
+    `mjc:option:solver`, `mjc:option:cone` and `mjc:option:impratio` are authored through the `mjc:option:*`
+    attributes. The attributes below only cover `SolverMuJoCo` settings that have no MuJoCo USD equivalent.
+    Contact, sensor and multi-CCD toggles are authored through `mjc:flag:contact`, `mjc:flag:sensor` and
+    `mjc:flag:multiccd`.
 
     For the capacity attributes (`newton:mujoco:njmax`, `newton:mujoco:njmax_nnz`, `newton:mujoco:nconmax`
     and `newton:mujoco:nvmax`), a value of -1 lets the solver choose an appropriate default."""
