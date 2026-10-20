@@ -566,11 +566,11 @@ class "NewtonMuJoCoSceneAPI" (
     Contact, sensor and multi-CCD toggles are authored through `mjc:flag:contact`, `mjc:flag:sensor` and
     `mjc:flag:multiccd`.
 
-    For the capacity attributes (`newton:mujoco:njmax`, `newton:mujoco:njmax_nnz`, `newton:mujoco:nconmax`
-    and `newton:mujoco:nvmax`), a value of -1 lets the solver choose an appropriate default."""
+    For the capacity attributes (`newton:mjwarp:njmax`, `newton:mjwarp:njmax_nnz`, `newton:mjwarp:nconmax`
+    and `newton:mjwarp:nvmax`), a value of -1 lets the solver choose an appropriate default."""
 )
 {
-    uniform int newton:mujoco:njmax = -1 (
+    uniform int newton:mjwarp:njmax = -1 (
         doc = """Maximum number of constraints per world (MuJoCo `njmax`).
 
         If set to -1, the solver estimates a value automatically. An explicit value is increased, with a warning, if it
@@ -585,7 +585,7 @@ class "NewtonMuJoCoSceneAPI" (
         }
     )
 
-    uniform int newton:mujoco:njmax_nnz = -1 (
+    uniform int newton:mjwarp:njmax_nnz = -1 (
         doc = """Sparse constraint Jacobian nonzero capacity per world (MuJoCo `njmax_nnz`).
 
         If set to -1, the solver derives a value from the constraint counts.
@@ -599,11 +599,26 @@ class "NewtonMuJoCoSceneAPI" (
         }
     )
 
-    uniform int newton:mujoco:nconmax = -1 (
+    uniform int newton:mjwarp:nconmax = -1 (
         doc = """Maximum number of contacts per world (MuJoCo `nconmax`).
 
         If set to -1, the solver estimates a value automatically. An explicit value is increased, with a warning, if it
         cannot hold the initial MuJoCo contacts.
+
+        Range: [-1, inf)
+        Units: dimensionless"""
+        limits = {
+            dictionary hard = {
+                int minimum = -1
+            }
+        }
+    )
+
+    uniform int newton:mjwarp:nvmax = -1 (
+        doc = """Maximum number of active degrees of freedom per world when sleeping is enabled (MuJoCo `nvmax`).
+
+        If set to -1, space is allocated for every degree of freedom. Only valid when sleeping is
+        enabled in the solver.
 
         Range: [-1, inf)
         Units: dimensionless"""
@@ -622,21 +637,6 @@ class "NewtonMuJoCoSceneAPI" (
         doc = """Whether MuJoCo computes contacts.
 
         When false, contacts must be provided by Newton's collision pipeline."""
-    )
-
-    uniform int newton:mujoco:nvmax = -1 (
-        doc = """Maximum number of active degrees of freedom per world when sleeping is enabled (MuJoCo `nvmax`).
-
-        If set to -1, space is allocated for every degree of freedom. Only valid when sleeping is
-        enabled in the solver.
-
-        Range: [-1, inf)
-        Units: dimensionless"""
-        limits = {
-            dictionary hard = {
-                int minimum = -1
-            }
-        }
     )
 
     uniform int newton:mujoco:updateDataInterval = 1 (

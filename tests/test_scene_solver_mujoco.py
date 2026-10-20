@@ -12,12 +12,12 @@ USD_HAS_LIMITS = Usd.GetVersion() >= (0, 25, 11)
 
 # (attribute name, default value, hard minimum or None)
 ATTRIBUTES = [
-    ("newton:mujoco:njmax", -1, -1),
-    ("newton:mujoco:njmax_nnz", -1, -1),
-    ("newton:mujoco:nconmax", -1, -1),
+    ("newton:mjwarp:njmax", -1, -1),
+    ("newton:mjwarp:njmax_nnz", -1, -1),
+    ("newton:mjwarp:nconmax", -1, -1),
+    ("newton:mjwarp:nvmax", -1, -1),
     ("newton:mujoco:useMujocoCpu", False, None),
     ("newton:mujoco:useMujocoContacts", True, None),
-    ("newton:mujoco:nvmax", -1, -1),
     ("newton:mujoco:updateDataInterval", 1, 0),
     ("newton:mujoco:includeSites", True, None),
     ("newton:mujoco:skipVisualOnlyGeoms", True, None),
