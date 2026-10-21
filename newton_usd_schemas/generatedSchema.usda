@@ -729,7 +729,7 @@ class "NewtonCollisionPipelineAPI" (
         automatic rigid-contact outputs) require gradients.
 
         If `newton:collisionPipeline:requiresGrad` is set to "inherit", the
-        engine uses the owning model's `requires_grad` setting."""
+        simulation's gradient requirement is inherited."""
     )
 
     uniform bool newton:collisionPipeline:deterministic = false (
@@ -772,16 +772,56 @@ class "NewtonCollisionPipelineAPI" (
 
     uniform token newton:collisionPipeline:contactMatching = "disabled" (
         allowedTokens = ["disabled", "latest", "sticky"]
-        doc = """Frame-to-frame contact matching mode.
+        doc = """Frame-to-frame contact matching mode. One of "disabled",
+        "latest", or "sticky".
+
+        "disabled" (default): No frame-to-frame contact matching.
+
+        "latest": Match current contacts against the previous frame, but
+        keep the current frame's freshly generated contact geometry.
+
+        "sticky": Match like "latest", then reuse each matched contact's
+        body-frame contact points and offsets, and world-frame normal from
+        the previous frame when the contact is penetrating and the saved
+        witnesses remain within the position threshold of the fresh witnesses.
+        Unmatched contacts pass through with their fresh narrow-phase geometry.
+        Useful for stacking scenarios where small frame-to-frame geometric
+        jitter on persistent contacts degrades stability.
+
+        Contacts between the same shape pair are matched using a world-space
+        distance threshold
+        (`newton:collisionPipeline:contactMatchingPosThreshold`) and a normal
+        dot-product threshold
+        (`newton:collisionPipeline:contactMatchingNormalDotThreshold`).
+        Both thresholds apply only to "latest" and "sticky"; they are unused
+        when `newton:collisionPipeline:contactMatching` is "disabled".
+
+        Matched contacts also keep fresh geometry if the fresh contact is
+        separated, or if either saved witness, transformed by the current
+        body pose, lies farther than
+        `newton:collisionPipeline:contactMatchingPosThreshold` from its
+        corresponding fresh witness. This prevents a rotating surface from
+        replaying a stale material point even when its geometric contact
+        midpoint stays put. These contacts remain matched, and the fresh
+        geometry becomes the saved history for the next frame.
 
         Any non-"disabled" mode implies
-        `newton:collisionPipeline:deterministic` behaves as true."""
+        `newton:collisionPipeline:deterministic` behaves as true.
+        Defaults to "disabled"."""
     )
 
     uniform float newton:collisionPipeline:contactMatchingPosThreshold = 0.0005 (
-        doc = """World-space distance threshold between the previous and
-        current contact midpoints. Contacts whose midpoint moves more than
-        this are considered broken.
+        doc = """Maximum world-space distance between the previous and current
+        contact midpoints for a match. Contacts that moved more than this
+        between frames are considered broken. In sticky mode, this also
+        bounds each saved witness's distance from its fresh contact point
+        under the current body transforms.
+
+        Used only when `newton:collisionPipeline:contactMatching` is "latest"
+        or "sticky". Unused when matching is "disabled".
+
+        The distance metric uses the average of the two contact points in
+        world space, symmetric in shape 0 and shape 1.
 
         Range: [0, inf)
         Units: distance"""
@@ -793,8 +833,12 @@ class "NewtonCollisionPipelineAPI" (
     )
 
     uniform float newton:collisionPipeline:contactMatchingNormalDotThreshold = 0.995 (
-        doc = """Minimum dot product between old and new contact normals for a
-        match.
+        doc = """Minimum dot product between old and new contact normals.
+        Below this the contact is reported as broken even if the shape pair
+        and position match.
+
+        Used only when `newton:collisionPipeline:contactMatching` is "latest"
+        or "sticky". Unused when matching is "disabled".
 
         Range: [-1, 1]
         Units: dimensionless"""
