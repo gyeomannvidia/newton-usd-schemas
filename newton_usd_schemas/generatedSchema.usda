@@ -676,7 +676,11 @@ class "NewtonCollisionPipelineAPI" (
     )
 
     uniform bool newton:collisionPipeline:reduceContacts = true (
-        doc = "Whether to reduce contacts for mesh-mesh collisions."
+        doc = """Whether to reduce contacts for mesh-mesh, mesh-convex,
+        mesh-plane, heightfield-mesh, heightfield-convex, and heightfield-plane
+        pairs. Also applies to pairs where both shapes have SDF and edge
+        data, except box-box pairs. Hydroelastic contact reduction is
+        configured separately."""
     )
 
     uniform int newton:collisionPipeline:maxSoftContacts = -1 (
