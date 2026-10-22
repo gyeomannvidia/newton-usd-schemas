@@ -716,13 +716,12 @@ class "NewtonCollisionPipelineAPI" (
 
     uniform bool newton:collision:enableRigidSoftFullSurfaceContact = false (
         doc = """Generate soft contacts over the full soft-mesh surface (edges
-        and triangle interiors) against rigid SDFs, in addition to the
+        and triangle interiors) against rigid shapes, in addition to the
         per-vertex (particle) contacts.
 
-        Requires an SDF on every participating rigid mesh/convex shape (see
-        `NewtonSDFCollisionAPI`), and is only consumed by solvers that support
-        full-surface soft contact; other solvers should raise on such
-        contacts."""
+        Meshes use exact feature contacts and do not require a volume SDF.
+        This is only consumed by solvers that support full-surface soft
+        contact; other solvers should raise on such contacts."""
     )
 
     uniform token newton:collision:requiresGrad = "inherit" (
