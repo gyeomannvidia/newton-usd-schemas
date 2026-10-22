@@ -28,7 +28,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
         self.assertTrue(self.scene.HasAPI("NewtonSceneAPI"))
         self.assertTrue(self.scene.HasAPI("NewtonCollisionPipelineAPI"))
         self.assertTrue(self.scene.HasAttribute("newton:maxSolverIterations"))
-        self.assertTrue(self.scene.HasAttribute("newton:collisionPipeline:broadPhase"))
+        self.assertTrue(self.scene.HasAttribute("newton:collision:broadPhase"))
 
     def test_api_limitations(self):
         prim: Usd.Prim = self.stage.DefinePrim("/NotScene", "Xform")
@@ -36,7 +36,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_broad_phase(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:broadPhase")
+        attr = self.scene.GetAttribute("newton:collision:broadPhase")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), "explicit")
@@ -48,7 +48,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_max_triangle_pairs(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:maxTrianglePairs")
+        attr = self.scene.GetAttribute("newton:collision:maxTrianglePairs")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), -1)
@@ -65,7 +65,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_max_rigid_contacts(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:maxRigidContacts")
+        attr = self.scene.GetAttribute("newton:collision:maxRigidContacts")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), -1)
@@ -82,7 +82,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_reduce_contacts(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:reduceContacts")
+        attr = self.scene.GetAttribute("newton:collision:reduceContacts")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), True)
@@ -93,7 +93,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_max_soft_contacts(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:maxSoftContacts")
+        attr = self.scene.GetAttribute("newton:collision:maxSoftContacts")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), -1)
@@ -110,7 +110,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_soft_contact_gap(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:softContactGap")
+        attr = self.scene.GetAttribute("newton:collision:softContactGap")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), -math.inf)
@@ -127,7 +127,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_enable_rigid_soft_full_surface_contact(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:enableRigidSoftFullSurfaceContact")
+        attr = self.scene.GetAttribute("newton:collision:enableRigidSoftFullSurfaceContact")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), False)
@@ -138,7 +138,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_requires_grad(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:requiresGrad")
+        attr = self.scene.GetAttribute("newton:collision:requiresGrad")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), "inherit")
@@ -150,7 +150,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_deterministic(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:deterministic")
+        attr = self.scene.GetAttribute("newton:collision:deterministic")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), False)
@@ -161,7 +161,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_include_static_kinematic_pairs(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:includeStaticKinematicPairs")
+        attr = self.scene.GetAttribute("newton:collision:includeStaticKinematicPairs")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), True)
@@ -172,7 +172,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_max_shape_pairs(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:maxShapePairs")
+        attr = self.scene.GetAttribute("newton:collision:maxShapePairs")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), -1)
@@ -189,7 +189,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_contact_matching(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:contactMatching")
+        attr = self.scene.GetAttribute("newton:collision:contactMatching")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), "disabled")
@@ -201,7 +201,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_contact_matching_pos_threshold(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:contactMatchingPosThreshold")
+        attr = self.scene.GetAttribute("newton:collision:contactMatchingPosThreshold")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertAlmostEqual(attr.Get(), 0.0005)
@@ -218,7 +218,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_contact_matching_normal_dot_threshold(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:contactMatchingNormalDotThreshold")
+        attr = self.scene.GetAttribute("newton:collision:contactMatchingNormalDotThreshold")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertAlmostEqual(attr.Get(), 0.995)
@@ -235,7 +235,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_contact_report(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:contactReport")
+        attr = self.scene.GetAttribute("newton:collision:contactReport")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), False)
@@ -246,7 +246,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_verify_buffers(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:verifyBuffers")
+        attr = self.scene.GetAttribute("newton:collision:verifyBuffers")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), True)
@@ -257,7 +257,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_contact_reduction_hashtable_size_factor(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:contactReductionHashtableSizeFactor")
+        attr = self.scene.GetAttribute("newton:collision:contactReductionHashtableSizeFactor")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertAlmostEqual(attr.Get(), 0.25)
@@ -274,7 +274,7 @@ class TestNewtonCollisionPipelineAPI(unittest.TestCase):
 
     def test_speculative_max_contact_gap(self):
         self.scene.ApplyAPI("NewtonCollisionPipelineAPI")
-        attr = self.scene.GetAttribute("newton:collisionPipeline:maxSpeculativeContactGap")
+        attr = self.scene.GetAttribute("newton:collision:maxSpeculativeContactGap")
         self.assertIsNotNone(attr)
         self.assertFalse(attr.HasAuthoredValue())
         self.assertEqual(attr.Get(), -math.inf)

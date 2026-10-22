@@ -626,7 +626,7 @@ class "NewtonCollisionPipelineAPI" (
     Applying this schema also applies `NewtonSceneAPI`."""
 )
 {
-    uniform token newton:collisionPipeline:broadPhase = "explicit" (
+    uniform token newton:collision:broadPhase = "explicit" (
         allowedTokens = ["nxn", "sap", "explicit"]
         doc = """Broad phase candidate-pair generation strategy.
 
@@ -636,7 +636,7 @@ class "NewtonCollisionPipelineAPI" (
         pairs) instead of dynamic broad-phase search."""
     )
 
-    uniform int newton:collisionPipeline:maxTrianglePairs = -1 (
+    uniform int newton:collision:maxTrianglePairs = -1 (
         doc = """Maximum number of triangle pairs allocated by the narrow phase
         for mesh and heightfield collisions.
 
@@ -656,7 +656,7 @@ class "NewtonCollisionPipelineAPI" (
         }
     )
 
-    uniform int newton:collisionPipeline:maxRigidContacts = -1 (
+    uniform int newton:collision:maxRigidContacts = -1 (
         doc = """Maximum rigid contact buffer capacity.
 
         If set to `-1`, the engine can use its own logic to determine the
@@ -675,7 +675,7 @@ class "NewtonCollisionPipelineAPI" (
         }
     )
 
-    uniform bool newton:collisionPipeline:reduceContacts = true (
+    uniform bool newton:collision:reduceContacts = true (
         doc = """Whether to reduce contacts for mesh-mesh, mesh-convex,
         mesh-plane, heightfield-mesh, heightfield-convex, and heightfield-plane
         pairs. Also applies to pairs where both shapes have SDF and edge
@@ -683,13 +683,13 @@ class "NewtonCollisionPipelineAPI" (
         configured separately."""
     )
 
-    uniform int newton:collisionPipeline:maxSoftContacts = -1 (
+    uniform int newton:collision:maxSoftContacts = -1 (
         doc = """Maximum soft contact buffer capacity.
 
-        If `newton:collisionPipeline:maxSoftContacts` is set to `-1`, the
+        If `newton:collision:maxSoftContacts` is set to `-1`, the
         engine derives a capacity from the model's soft-rigid contact pair
         count (plus full-surface headroom when
-        `newton:collisionPipeline:enableRigidSoftFullSurfaceContact` is set).
+        `newton:collision:enableRigidSoftFullSurfaceContact` is set).
 
         Range: [-1, inf)
         Units: dimensionless"""
@@ -700,11 +700,11 @@ class "NewtonCollisionPipelineAPI" (
         }
     )
 
-    uniform float newton:collisionPipeline:softContactGap = -inf (
+    uniform float newton:collision:softContactGap = -inf (
         doc = """Detection-only distance added to the per-particle radius for
         particle-shape (soft) contact queries.
 
-        If `newton:collisionPipeline:softContactGap` is set to `-inf`, the
+        If `newton:collision:softContactGap` is set to `-inf`, the
         engine's default should be used instead.
 
         Range: [0, inf)
@@ -716,7 +716,7 @@ class "NewtonCollisionPipelineAPI" (
         }
     )
 
-    uniform bool newton:collisionPipeline:enableRigidSoftFullSurfaceContact = false (
+    uniform bool newton:collision:enableRigidSoftFullSurfaceContact = false (
         doc = """Generate soft contacts over the full soft-mesh surface (edges
         and triangle interiors) against rigid SDFs, in addition to the
         per-vertex (particle) contacts.
@@ -727,27 +727,27 @@ class "NewtonCollisionPipelineAPI" (
         contacts."""
     )
 
-    uniform token newton:collisionPipeline:requiresGrad = "inherit" (
+    uniform token newton:collision:requiresGrad = "inherit" (
         allowedTokens = ["inherit", "true", "false"]
         doc = """Whether pipeline-generated soft contacts (and the deprecated
         automatic rigid-contact outputs) require gradients.
 
-        If `newton:collisionPipeline:requiresGrad` is set to "inherit", the
+        If `newton:collision:requiresGrad` is set to "inherit", the
         simulation's gradient requirement is inherited."""
     )
 
-    uniform bool newton:collisionPipeline:deterministic = false (
+    uniform bool newton:collision:deterministic = false (
         doc = """Sort contacts after the narrow phase so that results are
         independent of GPU thread scheduling.
 
         Also enables deterministic hydroelastic accumulation and contact
         allocation. Adds a radix sort + gather pass.
 
-        If `newton:collisionPipeline:contactMatching` is set to any mode other
+        If `newton:collision:contactMatching` is set to any mode other
         than "disabled", this flag behaves as true."""
     )
 
-    uniform bool newton:collisionPipeline:includeStaticKinematicPairs = true (
+    uniform bool newton:collision:includeStaticKinematicPairs = true (
         doc = """Whether to generate contacts for static-kinematic and
         kinematic-kinematic shape pairs.
 
@@ -755,12 +755,12 @@ class "NewtonCollisionPipelineAPI" (
         filtered, regardless of this setting."""
     )
 
-    uniform int newton:collisionPipeline:maxShapePairs = -1 (
+    uniform int newton:collision:maxShapePairs = -1 (
         doc = """Override for the broad-phase candidate-pair buffer capacity
-        used by the "nxn" and "sap" `newton:collisionPipeline:broadPhase`
+        used by the "nxn" and "sap" `newton:collision:broadPhase`
         modes.
 
-        If `newton:collisionPipeline:maxShapePairs` is set to `-1`, the engine
+        If `newton:collision:maxShapePairs` is set to `-1`, the engine
         uses the worst-case per-world bound. Ignored for the "explicit" mode.
 
         A value of `0` is invalid.
@@ -774,7 +774,7 @@ class "NewtonCollisionPipelineAPI" (
         }
     )
 
-    uniform token newton:collisionPipeline:contactMatching = "disabled" (
+    uniform token newton:collision:contactMatching = "disabled" (
         allowedTokens = ["disabled", "latest", "sticky"]
         doc = """Frame-to-frame contact matching mode. One of "disabled",
         "latest", or "sticky".
@@ -794,34 +794,34 @@ class "NewtonCollisionPipelineAPI" (
 
         Contacts between the same shape pair are matched using a world-space
         distance threshold
-        (`newton:collisionPipeline:contactMatchingPosThreshold`) and a normal
+        (`newton:collision:contactMatchingPosThreshold`) and a normal
         dot-product threshold
-        (`newton:collisionPipeline:contactMatchingNormalDotThreshold`).
+        (`newton:collision:contactMatchingNormalDotThreshold`).
         Both thresholds apply only to "latest" and "sticky"; they are unused
-        when `newton:collisionPipeline:contactMatching` is "disabled".
+        when `newton:collision:contactMatching` is "disabled".
 
         Matched contacts also keep fresh geometry if the fresh contact is
         separated, or if either saved witness, transformed by the current
         body pose, lies farther than
-        `newton:collisionPipeline:contactMatchingPosThreshold` from its
+        `newton:collision:contactMatchingPosThreshold` from its
         corresponding fresh witness. This prevents a rotating surface from
         replaying a stale material point even when its geometric contact
         midpoint stays put. These contacts remain matched, and the fresh
         geometry becomes the saved history for the next frame.
 
         Any non-"disabled" mode implies
-        `newton:collisionPipeline:deterministic` behaves as true.
+        `newton:collision:deterministic` behaves as true.
         Defaults to "disabled"."""
     )
 
-    uniform float newton:collisionPipeline:contactMatchingPosThreshold = 0.0005 (
+    uniform float newton:collision:contactMatchingPosThreshold = 0.0005 (
         doc = """Maximum world-space distance between the previous and current
         contact midpoints for a match. Contacts that moved more than this
         between frames are considered broken. In sticky mode, this also
         bounds each saved witness's distance from its fresh contact point
         under the current body transforms.
 
-        Used only when `newton:collisionPipeline:contactMatching` is "latest"
+        Used only when `newton:collision:contactMatching` is "latest"
         or "sticky". Unused when matching is "disabled".
 
         The distance metric uses the average of the two contact points in
@@ -836,12 +836,12 @@ class "NewtonCollisionPipelineAPI" (
         }
     )
 
-    uniform float newton:collisionPipeline:contactMatchingNormalDotThreshold = 0.995 (
+    uniform float newton:collision:contactMatchingNormalDotThreshold = 0.995 (
         doc = """Minimum dot product between old and new contact normals.
         Below this the contact is reported as broken even if the shape pair
         and position match.
 
-        Used only when `newton:collisionPipeline:contactMatching` is "latest"
+        Used only when `newton:collision:contactMatching` is "latest"
         or "sticky". Unused when matching is "disabled".
 
         Range: [-1, 1]
@@ -854,22 +854,22 @@ class "NewtonCollisionPipelineAPI" (
         }
     )
 
-    uniform bool newton:collisionPipeline:contactReport = false (
+    uniform bool newton:collision:contactReport = false (
         doc = """Allocate and populate per-frame contact-matching new/broken
         index and count outputs.
 
-        Requires a non-"disabled" `newton:collisionPipeline:contactMatching`
+        Requires a non-"disabled" `newton:collision:contactMatching`
         mode."""
     )
 
-    uniform bool newton:collisionPipeline:verifyBuffers = true (
+    uniform bool newton:collision:verifyBuffers = true (
         doc = """Run a diagnostic kernel at the end of the narrow phase that
         prints warnings on any intermediate candidate-pair or final rigid
         contact buffer overflow."""
     )
 
-    uniform float newton:collisionPipeline:contactReductionHashtableSizeFactor = 0.25 (
-        doc = """Multiplier applied to `newton:collisionPipeline:maxTrianglePairs`
+    uniform float newton:collision:contactReductionHashtableSizeFactor = 0.25 (
+        doc = """Multiplier applied to `newton:collision:maxTrianglePairs`
         when allocating the global contact reduction hashtable.
 
         Increase this if hashtable fill/failure warnings appear.
@@ -883,7 +883,7 @@ class "NewtonCollisionPipelineAPI" (
         }
     )
 
-    uniform float newton:collisionPipeline:maxSpeculativeContactGap = -inf (
+    uniform float newton:collision:maxSpeculativeContactGap = -inf (
         doc = """Upper bound on the velocity-based contact gap for speculative
         rigid contacts.
 
@@ -892,7 +892,7 @@ class "NewtonCollisionPipelineAPI" (
         value of `0` enables speculative contacts without velocity
         adaptation.
 
-        If `newton:collisionPipeline:maxSpeculativeContactGap` is set to
+        If `newton:collision:maxSpeculativeContactGap` is set to
         `-inf`, speculative contacts are disabled.
 
         Range: [0, inf)
