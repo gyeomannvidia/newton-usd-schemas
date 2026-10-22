@@ -686,10 +686,8 @@ class "NewtonCollisionPipelineAPI" (
     uniform int newton:collision:maxSoftContacts = -1 (
         doc = """Maximum soft contact buffer capacity.
 
-        If `newton:collision:maxSoftContacts` is set to `-1`, the
-        engine derives a capacity from the model's soft-rigid contact pair
-        count (plus full-surface headroom when
-        `newton:collision:enableRigidSoftFullSurfaceContact` is set).
+        If `newton:collision:maxSoftContacts` is set to `-1`, the engine
+        chooses the buffer capacity.
 
         Range: [-1, inf)
         Units: dimensionless"""
@@ -761,7 +759,7 @@ class "NewtonCollisionPipelineAPI" (
         modes.
 
         If `newton:collision:maxShapePairs` is set to `-1`, the engine
-        uses the worst-case per-world bound. Ignored for the "explicit" mode.
+        chooses the buffer capacity. Ignored for the "explicit" mode.
 
         A value of `0` is invalid.
 
